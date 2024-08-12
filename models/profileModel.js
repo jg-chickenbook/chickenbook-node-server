@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const profileSchema = mongoose.Schema(
 	{
-		fullName: {
+		name: {
 			type: String,
 			required: [true, "Fullname is required"],
 		},
@@ -12,6 +12,32 @@ const profileSchema = mongoose.Schema(
 			default: "Developer",
 		},
 		profilePic: {
+			type: String,
+			required: false,
+		},
+		status: {
+			type: String,
+			required: false,
+		},
+		skills: {
+			type: Array,
+			required: false,
+		},
+		projects: {
+			type: Array,
+			of: Map,
+			of: String,
+			required: false,
+		},
+		phone: {
+			type: String,
+			required: false,
+		},
+		email: {
+			type: String,
+			required: false,
+		},
+		about: {
 			type: String,
 			required: false,
 		},
