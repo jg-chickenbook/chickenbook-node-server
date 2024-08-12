@@ -4,6 +4,7 @@ const {
 	getProfileById,
 	createProfile,
 	updateProfile,
+	deleteProfile
 } = require("./controllers/profileController");
 
 const express = require("express");
@@ -24,6 +25,7 @@ app.get("/profiles", getAllProfiles);
 app.get("/profiles/:id", getProfileById);
 app.post("/profile", createProfile);
 app.put("/profiles/:id", updateProfile);
+app.delete("/profiles/:id", deleteProfile);
 
 mongoose
 	.connect(databaseConnectionString)
