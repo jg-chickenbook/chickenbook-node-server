@@ -23,11 +23,11 @@ app.get("/", (req, res) => {
 });
 
 // Profile routes
-app.get("/profiles", getAllProfiles);
-app.get("/profiles/:id", getProfileById);
-app.post("/profile", createProfile);
-app.put("/profiles/:id", updateProfile);
-app.delete("/profiles/:id", deleteProfile);
+app.get("/api/profiles", getAllProfiles);
+app.get("/api/profiles/:id", getProfileById);
+app.post("/api/profile", createProfile);
+app.put("/api/profiles/:id", updateProfile);
+app.delete("/api/profiles/:id", deleteProfile);
 
 mongoose
 	.connect(databaseConnectionString)
