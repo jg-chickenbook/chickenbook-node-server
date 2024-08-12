@@ -24,9 +24,10 @@ const profileSchema = mongoose.Schema(
 			required: false,
 		},
 		projects: {
-			type: Array,
-			of: Map,
-			of: String,
+			type: [{
+				name: String,
+				link: String,
+			}],
 			required: false,
 		},
 		phone: {
