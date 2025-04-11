@@ -8,12 +8,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
+  userName: {
     type: String,
     required: true,
     trim: true
@@ -26,7 +21,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     match: [/^\S+@\S+\.\S+$/, 'Prosím zadejte platný e-mail']
   },
-  passwordHash: {
+  password: {
     type: String,
     required: true
   },
@@ -40,8 +35,9 @@ const userSchema = new mongoose.Schema({
 
 // Virtuální pole pro celé jméno
 userSchema.virtual('fullName').get(function() {
-  return `${this.firstName} ${this.lastName}`;
+  return `${this.userName}`;
 });
+
 
 // Před uložením možnost provést další operace
 userSchema.pre('save', function(next) {
