@@ -1,4 +1,17 @@
-require("dotenv").config();
+// Načít dotenv bezpodmínečně na začátku souboru
+require('dotenv').config();
+
+// Nyní můžete používat proměnné prostředí
+const urlAPI = process.env.MONGODB_URL;
+
+// Logování prostředí pro debugging
+console.log('Environment:', process.env.NODE_ENV || 'Not set');
+
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const app = express();
+
 const {
 	getAllProfiles,
 	getProfileById,
@@ -9,16 +22,16 @@ const {
 
 const { getAllUsers, getUserById  } = require("./controllers/userController");
 
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const app = express();
-
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-const databaseConnectionString = process.env.MONGODB_URL;
-console.log("Database connection string:", databaseConnectionString);
+// Ověření konfigurace MongoDB
+const mongodbUrl = process.env.MONGODB_URL;
+if (!mongodbUrl) {
+    console.error('MONGODB_URL není nastaveno! Aplikace nemůže pokračovat.');
+    process.exit(1); // Ukončit aplikaci, pokud chybí kritická konfigurace
+}
 
 // Routes
 app.get("/", async (req, res) => {
@@ -59,15 +72,16 @@ app.get("/api/users/:id", getUserById);
 
 
 mongoose
-	.connect(databaseConnectionString)
+	.connect(mongodbUrl)
 	.then(() => {
 		console.log("Connected to MongoDB");
-		app.listen(3000, () => {
-			console.log(
-				"Chickenbook Server app is running on http://localhost:3000/",
-			);
-		});
-	})
+    const PORT = process.env.PORT || 3000;
+		app.listen(PORT, () => {
+      console.log(
+          `Chickenbook Server app is running on http://localhost:${PORT}/`,
+      );
+  });
+})
 	.catch((err) => {
 		console.log("Error connecting to MongoDB", err);
 	});
